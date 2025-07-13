@@ -1,0 +1,80 @@
+TASK 3: Data Visualization
+● Transform raw data into visual formats like charts, graphs, and dashboards.
+● Use tools like Matplotlib, Seaborn, or Tableau for creating visuals.
+● Design visuals that enhance understanding and reveal insights clearly.
+● Craft compelling data stories that support decision-making.
+● Build a strong portfolio with impactful and well-designed visulization.
+Solution
+ 1. Objective of Data Visualization
+Goal: Turn complex data into simple, visual stories that:
+Uncover patterns, trends, and outliers.
+Support data-driven decisions.
+Communicate findings clearly to non-technical stakeholders.
+2. Tools You Can Use
+Tool	Use Case
+Matplotlib	Customizable base for static plots.
+Seaborn	Statistical plots with beautiful themes.
+Plotly	Interactive charts (web-ready).
+Tableau	Drag-and-drop dashboards.
+3.Core Visuals with Matplotlib & Seaborn
+Bar Chart – Category-wise Comparison
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+df = pd.read_csv('sales_data.csv')
+sns.barplot(x='Region', y='Sales', data=df)
+plt.title('Sales by Region')
+plt.xlabel('Region')
+plt.ylabel('Total Sales')
+plt.show()
+Line Chart – Trends Over Time
+df['Date'] = pd.to_datetime(df['Date'])
+monthly_sales = df.groupby(df['Date'].dt.to_period('M')).sum().reset_index()
+plt.plot(monthly_sales['Date'].astype(str), monthly_sales['Sales'])
+plt.xticks(rotation=45)
+plt.title('Monthly Sales Trend')
+plt.xlabel('Month')
+plt.ylabel('Sales')
+plt.tight_layout()
+plt.show()
+Heatmap – Correlation Between Variables
+corr = df.corr(numeric_only=True)
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix')
+plt.show()
+Pie Chart – Market Share (Matplotlib)
+region_sales = df.groupby('Region')['Sales'].sum()
+plt.pie(region_sales, labels=region_sales.index, autopct='%1.1f%%')
+plt.title('Sales Share by Region')
+plt.show()
+sns.histplot(df['Income'], kde=True)
+plt.title('Income Distribution')
+plt.show()
+4.Design Principles for Effective Visuals
+Simplicity: Avoid clutter. Show only what's necessary.
+Color Usage: Use contrasting colors to highlight important data.
+Labeling: Use clear axis titles and legends.
+Context: Add titles and captions that explain the visual.
+5.Crafting a Data Story
+Example:
+Question: "Which product category performs best across regions?"
+Steps:
+Show bar chart of sales by category.
+Add a map or stacked bar of categories by region.
+Include a trend line for top categories.
+Add annotations (e.g. “Holiday spike in December”).
+6.Portfolio Ideas
+Project Idea	Visuals to Include
+Sales Dashboard	Bar charts, line graphs, pie charts
+COVID-19 Case Analysis	Heatmaps, time series, geo 
+Customer Churn Analysis	Correlation matrix, box plots
+IPL/Football Analytics	Run/goal trendlines, player stats
+E-commerce Analysis	Category-wise sales, conversion funnel
+Bonus: Sample Dashboard (Seaborn + Matplotlib)
+fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+sns.barplot(x='Category', y='Sales', data=df, ax=axs[0])
+sns.lineplot(x='Date', y='Sales', data=df, ax=axs[1])
+axs[0].set_title("Sales by Category")
+axs[1].set_title("Sales Trend Over Time")
+plt.tight_layout()
+plt.show()
