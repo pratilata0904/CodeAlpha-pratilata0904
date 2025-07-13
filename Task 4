@@ -1,0 +1,83 @@
+TASK 4: Sentiment Analysis
+● Analyze text data to classify it as positive, negative or neutra.
+● 2. Use NLP techniques and lexicons to detect specific emotions.
+● 3. Apply analysis on data from sources like Amazon reviews, social media, and news sites.
+● 4. Understand public opinion and trends through sentiment patterns.
+● 5. Use results to inform marketing product developement or social insights
+
+1. What is Sentiment Analysis?
+Sentiment analysis is all about:
+Classifying text as positive, negative, or neutral.
+Picking up on emotional tones like anger, joy, sadness, and more.
+Gaining insights into public opinion, product feedback, and trending sentiments.
+2.Tools & Libraries
+Tool | Purpose |
+NLTK | Classic natural language processing |
+TextBlob | Quick sentiment polarity scoring |
+VADER | Tailored for social media text |
+HuggingFace Transformers | Deep learning-based sentiment models |
+3.Setup (Install Required Libraries)
+bash
+pip install textblob
+pip install vaderSentiment
+4.Basic Sentiment Analysis with TextBlob
+python
+from textblob import TextBlob
+text = "I love this product! It’s amazing and easy to use."
+blob = TextBlob(text)
+print(blob.sentiment) # Output: Sentiment(polarity=0.75, subjectivity=0.6)
+Polarity: ranges from -1 (negative) to 1 (positive)
+Subjectivity: ranges from 0 (fact) to 1 (opinion)
+5.Social Media Sentiment with VADER
+VADER (Valence Aware Dictionary for Sentiment Reasoning) is perfect for short, casual text like tweets or comments.
+python
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+analyzer = SentimentIntensityAnalyzer()
+text = "This phone is super slow. Not worth the price."
+score = analyzer.polarity_scores(text)
+print(score) # Output: {'neg': 0.5, 'neu': 0.5, 'pos': 0.0, 'compound': -0.65}
+# Labeling sentiment
+if score['compound'] >= 0.05:
+sentiment = "Positive"
+elif score['compound'] <= -0.05:
+sentiment = "Negative"
+else:
+sentiment = "Neutral"
+print(f"Sentiment: {sentiment}")
+100% of your text is likely AI-generated
+New version:
+Ready to dive into some real data? Let’s take a look at how to analyze Amazon reviews using a CSV file. Here’s a quick example:
+import pandas as pd
+df = pd.read_csv('amazon_reviews.csv')  # Make sure your column is named 'review_text'
+# Time to apply sentiment analysis
+df['sentiment'] = df['review_text'].apply(lambda x: SentimentIntensityAnalyzer().polarity_scores(x)['compound'])
+# Now, let’s classify the sentiment
+df['label'] = df['sentiment'].apply(lambda x: 'Positive' if x >= 0.05 else 'Negative' if x <= -0.05 else 'Neutral')
+print(df[['review_text', 'label']].head())
+let’s visualize those sentiment trends:
+python
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.countplot(data=df, x='label')
+plt.title("Sentiment Distribution of Reviews")
+plt.show()
+# Assuming you have a 'date' column
+df['date'] = pd.to_datetime(df['date'])
+df.groupby(df['date'].dt.to_period("M"))['sentiment'].mean().plot()
+plt.title("Monthly Sentiment Trend")
+plt.show()
+Now, let’s explore some applications of sentiment analysis:
+Source            | Insight You Can Gain                          
+Amazon Reviews     | Customer satisfaction by product              
+Twitter/Instagram  | Brand perception, campaign feedback           
+News Articles      | Public opinion on political/social issues     
+YouTube Comments   | Viewer sentiment on videos                   
+Here are some use cases for decision-making:
+Marketing:Spot customer pain points or highlight positive features.
+Product Development:** Get a feel for what features people love or dislike.
+Social Insights:** Monitor shifts in public opinion on political or social matters.
+Competitor Analysis:** Compare sentiment across different brands.
+Bonus: Sample Dashboard Metrics you might consider:
+Percentage of positive vs. negative reviews- Word cloud showcasing negative reviews
+Average sentiment over time for each product or category
+Emotion scores (like anger, joy, fear) using the NRC lexicon (for those advanced NLP enthusiasts)
