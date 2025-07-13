@@ -1,0 +1,60 @@
+Task 2
+: Exploratory Data Analysis (EDA)
+● Ask meaningful questions about the dataset before analysis.
+● Explore the data structure, including variables and data types.
+● Identify trends, patterns and anomalies within the data.
+● Test hypotheses and validate assumptions using statistics and visualization.
+● Detect potential data issues or problems to address in further analysis.
+Solution
+Step 1: Ask Meaningful Questions
+Before diving into the data, ask:
+What is the goal of the analysis?
+What kind of insights are we looking for?
+What questions are we trying to answer?
+Example:
+Which product category has the highest sales?
+Are there outliers in customer age or income?
+Does marketing spend affect conversion rate?
+Step 2: Load and Understand the Dataset
+import pandas as pd
+# Load your dataset
+df = pd.read_csv('your_dataset.csv') # make sure to replace this with your actual file
+# First look
+print(df.head())
+print(df.info())
+print(df.describe())
+Step 3
+Explore Structure & Types
+python
+Copy
+Edit
+# Check data types and null values
+print(df.dtypes)
+print(df.isnull().sum())
+# Unique values in categorical columns
+print(df['Category'].unique())
+Step 4: Identify Trends, Patterns, and Anomalies
+Here’s a quick example of how to analyze average sales by region:
+```python
+print(df.groupby('Region')['Sales'].mean())
+```
+And if you want to spot outliers in your numerical features, you can use the following code:
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.boxplot(x=df['Sales'])
+plt.title('Outliers in Sales')
+plt.show()
+ Step 5: Test Hypotheses & Validate Assumptions
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix')
+plt.show()
+Step 6: Detect Data Issues
+# Duplicates
+print("Duplicates:", df.duplicated().sum())
+# Negative or impossible values
+print(df[df['Age'] < 0])  # invalid ages
+# Skewed distributions
+sns.histplot(df['Income'], kde=True)
+plt.title('Income Distribution')
+plt.show()
